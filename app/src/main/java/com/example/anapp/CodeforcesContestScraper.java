@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CodeforcesContestScraper {
 
-    public List<String> getContests() {
+    public List<Codeforces> getContests() {
         try {
             String url = "https://codeforces.com/contests";
             Document document = Jsoup.connect(url).get();
@@ -18,16 +18,17 @@ public class CodeforcesContestScraper {
             Element contestTable = document.select("table").get(0);
             Elements rows = contestTable.select("tr");
 
-            List<String> ans = new ArrayList<>();
+            List<Codeforces> ans = new ArrayList<>();
 
             for (int i = 1; i < rows.size(); i++) {
                 Element row = rows.get(i);
                 Elements col = row.select("td");
 
                 String contestName = col.get(0).text();
-                String startTime = col.get(1).text();
+                String startTime = col.get(2).text();
+                String length = col.get(3).text();
 
-                ans.add(contestName);
+                ans.add(new Codeforces(contestName, startTime, length, R.drawable.codeforces2));
             }
             return ans;
         } catch (Exception e) {

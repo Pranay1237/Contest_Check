@@ -2,6 +2,8 @@ package com.example.anapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ImageButton button;
     Button button1;
-    TextView show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
         button = findViewById(R.id.EditButton);
         button1 = findViewById(R.id.getContest);
-        show = findViewById(R.id.textView2);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,17 +50,21 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             super.run();
             CodeforcesContestScraper codeforcesContestScraper = new CodeforcesContestScraper();
-            final List<String> a = codeforcesContestScraper.getContests();
+            final List<Codeforces> contests = codeforcesContestScraper.getContests();
 
             // Update the UI on the main thread using runOnUiThread
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (a == null) {
+                    if (contests == null) {
                         Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_SHORT).show();
                         System.out.println("error");
-                    } else {
-                        show.setText(a.get(0));
+                    }
+                    else {
+                        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        recyclerView.setAdapter(new ContestsAdapter(getApplicationContext(), contests));
                     }
                 }
             });
