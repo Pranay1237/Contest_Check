@@ -49,8 +49,12 @@ public class MainActivity extends AppCompatActivity {
     class thread1 extends Thread {
         public void run() {
             super.run();
+
             CodeforcesContestScraper codeforcesContestScraper = new CodeforcesContestScraper();
+            LeetcodeContestScraper leetcodeContestScraper = new LeetcodeContestScraper();
+
             final List<Codeforces> contests = codeforcesContestScraper.getContests();
+            leetcodeContestScraper.getContests();
 
             // Update the UI on the main thread using runOnUiThread
             runOnUiThread(new Runnable() {
