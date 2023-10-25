@@ -14,17 +14,22 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
+    ImageButton button;
+    Button button1;
+    TextView show;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
-        ImageButton button = findViewById(R.id.EditButton);
-        Button button1 = findViewById(R.id.getContest);
-        TextView show = findViewById(R.id.textView2);
+        button = findViewById(R.id.EditButton);
+        button1 = findViewById(R.id.getContest);
+        show = findViewById(R.id.textView2);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,27 +41,29 @@ public class MainActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        CodeforcesContestScraper codeforcesContestScraper = new CodeforcesContestScraper();
-                        final List<String> a = codeforcesContestScraper.getContests();
-
-                        // Update the UI on the main thread using runOnUiThread
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (a == null) {
-                                    Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_SHORT).show();
-                                    System.out.println("error");
-                                } else {
-                                    show.setText(a.get(0));
-                                }
-                            }
-                        });
-                    }
-                }).start();
+                new thread1().start();
             }
         });
+    }
+
+    class thread1 extends Thread {
+        public void run() {
+            super.run();
+            CodeforcesContestScraper codeforcesContestScraper = new CodeforcesContestScraper();
+            final List<String> a = codeforcesContestScraper.getContests();
+
+            // Update the UI on the main thread using runOnUiThread
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (a == null) {
+                        Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_SHORT).show();
+                        System.out.println("error");
+                    } else {
+                        show.setText(a.get(0));
+                    }
+                }
+            });
+        }
     }
 }
