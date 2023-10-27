@@ -1,5 +1,8 @@
 package com.example.anapp;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +25,15 @@ public class CodechefContestScraper {
             if(response.isSuccessful()) {
                 String responseBody = response.body().string();
 
-                System.out.println(responseBody);
+                JSONArray jsonArray = new JSONArray(responseBody);
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String name = jsonObject.getString("start_time");
+                    String time = name.substring(0, 10);
+                    System.out.println("Time: " + time);
+                }
+
             } else {
                 System.out.println("Response was not Successful. Response code : " + response.code());
             }

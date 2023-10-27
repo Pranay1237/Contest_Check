@@ -39,6 +39,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.14.3")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation("org.json:json:20210307")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
