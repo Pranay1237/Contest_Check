@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -52,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
             CodeforcesContestScraper codeforcesContestScraper = new CodeforcesContestScraper();
             LeetcodeContestScraper leetcodeContestScraper = new LeetcodeContestScraper();
+            CodechefContestScraper codechefContestScraper = new CodechefContestScraper();
 
-            final List<Codeforces> contests = codeforcesContestScraper.getContests();
+            final List<ContestClass> contests = codeforcesContestScraper.getContests();
+            codechefContestScraper.getContests();
             leetcodeContestScraper.getContests();
 
             // Update the UI on the main thread using runOnUiThread

@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.util.List;
 
 public class LeetcodeContestScraper {
@@ -16,6 +17,7 @@ public class LeetcodeContestScraper {
 
             Element contestDiv1 = document.getElementsByClass("truncate").get(0);
             Element contestDiv2 = document.getElementsByClass("truncate").get(1);
+
             Elements span1 = contestDiv1.select("span");
             Elements span2 = contestDiv2.select("span");
 

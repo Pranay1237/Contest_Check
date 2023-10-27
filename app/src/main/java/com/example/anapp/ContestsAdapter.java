@@ -12,9 +12,9 @@ import java.util.List;
 public class ContestsAdapter extends RecyclerView.Adapter<ContestsViewHolder> {
 
     Context context;
-    List<Codeforces> items;
+    List<ContestClass> items;
 
-    public ContestsAdapter(Context context, List<Codeforces> items) {
+    public ContestsAdapter(Context context, List<ContestClass> items) {
         this.context = context;
         this.items = items;
     }

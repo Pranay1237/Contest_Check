@@ -1,14 +1,14 @@
 package com.example.anapp;
 
-public class Codeforces {
+public class ContestClass {
 
-    String contestName, startTime, length;
+    String contestName, startTime, Duration;
     int image;
 
-    public Codeforces(String contestName, String startTime, String length, int image) {
+    public ContestClass(String contestName, String startTime, String Duration, int image) {
         this.contestName = contestName;
         this.startTime = startTime;
-        this.length = length;
+        this.Duration = Duration;
         this.image = image;
     }
 
@@ -20,8 +20,8 @@ public class Codeforces {
         return startTime;
     }
 
-    public String getLength() {
-        return length;
+    public String getDuration() {
+        return Duration;
     }
 
     public int getImage() {
