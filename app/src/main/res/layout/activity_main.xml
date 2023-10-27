@@ -15,11 +15,21 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/upcoming_contests"
+        android:text="UPCOMING CONTESTS"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_below="@id/my_toolbar"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="409dp"
-        android:layout_height="700dp"
-        android:layout_below="@+id/my_toolbar"
+        android:layout_height="650dp"
+        android:layout_below="@+id/upcoming_contests"
         android:layout_marginBottom="5dp" />
 
 </RelativeLayout>

@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp">
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
 
     <ImageView
         android:layout_width="130dp"
@@ -14,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contest Name"
+        android:textColor="@color/black"
         android:id="@+id/contestname"
         android:layout_toEndOf="@+id/imageview"/>
 
@@ -21,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date Time"
+        android:textColor="@color/black"
         android:id="@+id/datetime"
         android:layout_marginTop="5dp"
         android:layout_below="@+id/contestname"
@@ -30,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="duration"
+        android:textColor="@color/black"
         android:id="@+id/duration"
         android:layout_marginTop="5dp"
         android:layout_below="@+id/datetime"

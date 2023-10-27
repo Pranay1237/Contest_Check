@@ -16,8 +16,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    ImageButton button;
-    Button button1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
