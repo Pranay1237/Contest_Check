@@ -3,7 +3,11 @@ package com.example.anapp;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +37,10 @@ public class CodechefContestScraper {
 
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String time = jsonObject.getString("start_time");
-                    String date = time.substring(0, 10);
+                    String dateTime = jsonObject.getString("start_time");
+                    String date = dateTime.substring(0, 10);
+                    String name = jsonObject.getString("name");
+                    String duration = jsonObject.getString("duration");
 
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -42,9 +48,10 @@ public class CodechefContestScraper {
                     LocalDate currentDate = LocalDate.now();
 
                     if(localDate.isAfter(currentDate)) {
-                        String name = jsonObject.getString("name");
-                        String duration = jsonObject.getString("duration");
                         int d = Integer.parseInt(duration)/3600;
+                        dateTime = dateTime.replace(" ", "T");
+                        dateTime = dateTime.replace("TUTC", "Z");
+                        String time = convertTime(dateTime);
                         a.add(new ContestClass(name, time, Integer.toString(d), R.drawable.codechef));
                     }
                 }
@@ -56,5 +63,17 @@ public class CodechefContestScraper {
             e.printStackTrace();
         }
         return a;
+    }
+
+    public String convertTime(String time) {
+        Instant instant = Instant.parse(time);
+
+        ZoneId istZone = ZoneId.of("Asia/Kolkata");
+        ZonedDateTime istTime = instant.atZone(istZone);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String istTimeString = istTime.format(formatter);
+
+        return istTimeString;
     }
 }

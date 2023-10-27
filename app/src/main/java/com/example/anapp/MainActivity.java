@@ -55,10 +55,14 @@ public class MainActivity extends AppCompatActivity {
 
             final List<ContestClass> contests = codeforcesContestScraper.getContests();
             final List<ContestClass> a = codechefContestScraper.getContests();
-            leetcodeContestScraper.getContests();
+            final List<ContestClass> b = leetcodeContestScraper.getContests();
 
             if(contests != null && a != null) {
                 contests.addAll(a);
+            }
+
+            if(contests != null && b != null) {
+                contests.addAll(b);
             }
 
             // Update the UI on the main thread using runOnUiThread
