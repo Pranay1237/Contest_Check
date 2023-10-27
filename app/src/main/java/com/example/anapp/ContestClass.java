@@ -21,7 +21,7 @@ public class ContestClass {
     }
 
     public String getDuration() {
-        return Duration;
+        return Duration + " hrs";
     }
 
     public int getImage() {

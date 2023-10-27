@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ContestsViewHolder extends RecyclerView.ViewHolder {
 
     ImageView imageView;
-    TextView contestName, dateTime;
+    TextView contestName, dateTime, duration;
     public ContestsViewHolder(@NonNull View itemView) {
         super(itemView);
         imageView = itemView.findViewById(R.id.imageview);
         contestName = itemView.findViewById(R.id.contestname);
         dateTime = itemView.findViewById(R.id.datetime);
+        duration = itemView.findViewById(R.id.duration);
     }
 }

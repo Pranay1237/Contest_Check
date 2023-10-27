@@ -5,8 +5,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CodeforcesContestScraper {
 
@@ -28,12 +33,25 @@ public class CodeforcesContestScraper {
                 String startTime = col.get(2).text();
                 String Duration = col.get(3).text();
 
-                ans.add(new ContestClass(contestName, startTime, Duration, R.drawable.codeforces2));
+                ans.add(new ContestClass(contestName, convertTime(startTime), Duration, R.drawable.codeforces));
             }
             return ans;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String convertTime(String time) {
+
+        DateTimeFormatter moscowFormatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm", Locale.ENGLISH);
+        ZonedDateTime moscowDateTime = ZonedDateTime.parse(time, moscowFormatter.withZone(ZoneId.of("Europe/Moscow")));
+
+        ZonedDateTime istDateTime = moscowDateTime.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
+
+        DateTimeFormatter istFormatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm", Locale.ENGLISH);
+        String istDateTimeStr = istDateTime.format(istFormatter);
+
+        return istDateTimeStr;
     }
 }

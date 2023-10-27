@@ -29,6 +29,7 @@ public class ContestsAdapter extends RecyclerView.Adapter<ContestsViewHolder> {
     public void onBindViewHolder(@NonNull ContestsViewHolder holder, int position) {
         holder.contestName.setText(items.get(position).getContestName());
         holder.dateTime.setText(items.get(position).getStartTime());
+        holder.duration.setText(items.get(position).getDuration());
         holder.imageView.setImageResource(items.get(position).getImage());
     }
 

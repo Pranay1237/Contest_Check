@@ -27,22 +27,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
-        button = findViewById(R.id.EditButton);
-        button1 = findViewById(R.id.getContest);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Clicked!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new thread1().start();
-            }
-        });
+        new thread1().start();
     }
 
     class thread1 extends Thread {
