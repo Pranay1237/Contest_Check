@@ -1,17 +1,17 @@
 package com.example.anapp;
 
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +45,16 @@ public class LeetcodeContestScraper {
                     String time = jsonObject.getString("start_time");
                     String duration = jsonObject.getString("duration");
                     int d = Integer.parseInt(duration)/3600;
-                    a.add(new ContestClass(name, convertTime(time), Integer.toString(d), R.drawable.leetcode));
+
+                    time = convertTime(time);
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    LocalDateTime dateTime = LocalDateTime.parse(time, formatter);
+                    LocalDateTime currentDateTime = LocalDateTime.now();
+
+                    int left = (int) ChronoUnit.DAYS.between(dateTime, currentDateTime);
+
+                    a.add(new ContestClass(name, time, left, Integer.toString(d), R.drawable.leetcode));
                 }
             }
         }

@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +52,11 @@ public class CodechefContestScraper {
                         int d = Integer.parseInt(duration)/3600;
                         dateTime = dateTime.replace(" ", "T");
                         dateTime = dateTime.replace("TUTC", "Z");
+
                         String time = convertTime(dateTime);
-                        a.add(new ContestClass(name, time, Integer.toString(d), R.drawable.codechef));
+                        int daysLeft = (int) ChronoUnit.DAYS.between(currentDate, localDate);
+
+                        a.add(new ContestClass(name, time, daysLeft, Integer.toString(d), R.drawable.codechef));
                     }
                 }
             } else {

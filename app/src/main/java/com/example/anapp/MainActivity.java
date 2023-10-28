@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
                         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+                        Comparator<ContestClass> daysCompare = Comparator.comparingInt(ContestClass::getDaysLeft);
+                        contests.sort(daysCompare);
+
                         recyclerView.setAdapter(new ContestsAdapter(getApplicationContext(), contests));
                     }
                 }

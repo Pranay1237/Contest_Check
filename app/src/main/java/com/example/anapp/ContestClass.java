@@ -2,13 +2,14 @@ package com.example.anapp;
 
 public class ContestClass {
 
-    String contestName, startTime, Duration;
-    int image;
+    String contestName, startTime, duration;
+    int image, daysLeft;
 
-    public ContestClass(String contestName, String startTime, String Duration, int image) {
+    public ContestClass(String contestName, String startTime, int daysLeft, String duration, int image) {
         this.contestName = contestName;
         this.startTime = startTime;
-        this.Duration = Duration;
+        this.daysLeft = daysLeft;
+        this.duration = duration;
         this.image = image;
     }
 
@@ -20,8 +21,12 @@ public class ContestClass {
         return startTime;
     }
 
+    public int getDaysLeft() {
+        return daysLeft;
+    }
+
     public String getDuration() {
-        return Duration + " hrs";
+        return duration;
     }
 
     public int getImage() {
