@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.Collections;
@@ -15,6 +17,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         toolbar = findViewById(R.id.my_toolbar);
+        progressBar = findViewById(R.id.progressBar);
         setSupportActionBar(toolbar);
+
+        progressBar.setVisibility(View.VISIBLE);
 
         new thread1().start();
     }
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
                         recyclerView.setAdapter(new ContestsAdapter(getApplicationContext(), contests));
                     }
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
             });
         }

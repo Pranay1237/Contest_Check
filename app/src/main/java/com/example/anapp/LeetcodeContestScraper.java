@@ -54,7 +54,7 @@ public class LeetcodeContestScraper {
 
                     int left = (int) ChronoUnit.DAYS.between(dateTime, currentDateTime);
 
-                    a.add(new ContestClass(name, time, left, Integer.toString(d), R.drawable.leetcode));
+                    a.add(new ContestClass(name, time.substring(0, time.length() - 3), left, Integer.toString(d), R.drawable.leetcode));
                 }
             }
         }

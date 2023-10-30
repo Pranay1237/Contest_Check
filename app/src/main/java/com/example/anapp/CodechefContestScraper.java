@@ -56,7 +56,7 @@ public class CodechefContestScraper {
                         String time = convertTime(dateTime);
                         int daysLeft = (int) ChronoUnit.DAYS.between(currentDate, localDate);
 
-                        a.add(new ContestClass(name, time, daysLeft, Integer.toString(d), R.drawable.codechef));
+                        a.add(new ContestClass(name, time.substring(0, time.length() - 3), daysLeft, Integer.toString(d), R.drawable.codechef));
                     }
                 }
             } else {
