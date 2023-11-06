@@ -8,8 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ContestsAdapter extends RecyclerView.Adapter<ContestsViewHolder> {
 
@@ -36,26 +40,17 @@ public class ContestsAdapter extends RecyclerView.Adapter<ContestsViewHolder> {
 
         int left = items.get(position).getDaysLeft();
         if(left == 0) {
-            String time = items.get(position).getStartTime();
-            time = time.substring(time.length() - 5);
-            int hours = Integer.parseInt(time.substring(0, 2));
-            int mins = Integer.parseInt(time.substring(3, 5));
+            String dateTime = items.get(position).getStartTime();
 
-            LocalTime localTime = LocalTime.of(hours, mins);
-            LocalTime currentTime = LocalTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
 
-            Duration duration = Duration.between(currentTime, localTime);
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            LocalDateTime givenDateTime = LocalDateTime.parse(dateTime, formatter);
 
-            int h = (int)duration.toHours();
-            int m = (int)(duration.toMinutes() % 60);
+            Duration duration = Duration.between(currentDateTime, givenDateTime);
 
-            String ans;
+            String ans = "Starts in " + (int) duration.toHours() + ":" + (int) duration.toMinutes()%60;
 
-            if(h == 0) {
-                ans = "In " + m+ " min";
-            } else {
-                ans = "In " + h + ":" + m+ " hrs";
-            }
             holder.daysLeft.setText(ans);
         } else if(left == 1) {
             holder.daysLeft.setText("Tomorrow");

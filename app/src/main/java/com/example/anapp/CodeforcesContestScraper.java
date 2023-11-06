@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,17 +35,17 @@ public class CodeforcesContestScraper {
 
                 String contestName = col.get(0).text();
                 String startTime = col.get(2).text();
-                String Duration = col.get(3).text();
+                String duration = col.get(3).text();
 
                 String convertedTime = convertTime(startTime);
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
-                LocalDateTime localDateTime = LocalDateTime.parse(convertedTime, formatter);
+                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
+
                 LocalDateTime currentDateTime = LocalDateTime.now();
+                LocalDateTime givenDateTime = LocalDateTime.parse(convertedTime, formatter1);
+                Duration duration1 = Duration.between(currentDateTime, givenDateTime);
 
-                int left = (int) ChronoUnit.DAYS.between(currentDateTime, localDateTime);
-
-                ans.add(new ContestClass(contestName, convertedTime, left, Duration, R.drawable.codeforces));
+                ans.add(new ContestClass(contestName, convertedTime, (int)duration1.toDays(), duration, R.drawable.codeforces));
             }
             return ans;
         } catch (Exception e) {
