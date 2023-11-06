@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -39,13 +40,16 @@ public class CodeforcesContestScraper {
 
                 String convertedTime = convertTime(startTime);
 
-                DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
+                DateTimeFormatter f = DateTimeFormatter.ofPattern("E");
 
                 LocalDateTime currentDateTime = LocalDateTime.now();
-                LocalDateTime givenDateTime = LocalDateTime.parse(convertedTime, formatter1);
+                LocalDateTime givenDateTime = LocalDateTime.parse(convertedTime, formatter);
                 Duration duration1 = Duration.between(currentDateTime, givenDateTime);
 
-                ans.add(new ContestClass(contestName, convertedTime, (int)duration1.toDays(), duration, R.drawable.codeforces));
+                String day = givenDateTime.format(f);
+
+                ans.add(new ContestClass(contestName, convertedTime, day, (int)duration1.toDays(), duration, R.drawable.codeforces));
             }
             return ans;
         } catch (Exception e) {

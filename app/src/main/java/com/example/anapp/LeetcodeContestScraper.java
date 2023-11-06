@@ -56,7 +56,7 @@ public class LeetcodeContestScraper {
             int left = (int)duration.toDays();
             String dur = "01:30";
 
-            a.add(new ContestClass(weeklyContestName, weeklyContestDate, left, dur, R.drawable.leetcode));
+            a.add(new ContestClass(weeklyContestName, weeklyContestDate, "Sun", left, dur, R.drawable.leetcode));
 
             String contestNum = weeklyContestName.substring(15, 18);
             if(Integer.parseInt(contestNum)%2 == 1) {
@@ -69,7 +69,7 @@ public class LeetcodeContestScraper {
                 left = (int)duration.toDays();
                 dur = "01:30";
 
-                a.add(new ContestClass(biWeeklyContestName, biweeklyContestDate, left, dur, R.drawable.leetcode));
+                a.add(new ContestClass(biWeeklyContestName, biweeklyContestDate, "Sun", left, dur, R.drawable.leetcode));
             }
 
         } catch (Exception e) {

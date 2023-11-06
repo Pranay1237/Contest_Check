@@ -3,6 +3,7 @@ package com.example.anapp;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -73,7 +75,11 @@ public class CodechefContestScraper {
 
                         String dur = hrs + ":" + min;
 
-                        a.add(new ContestClass(name, time, left, dur, R.drawable.codechef));
+                        DateTimeFormatter f = DateTimeFormatter.ofPattern("E");
+
+                        String day = givenDateTime.format(f);
+
+                        a.add(new ContestClass(name, time, day, left, dur, R.drawable.codechef));
                     }
                 }
             } else {
