@@ -50,8 +50,6 @@ public class CodechefContestScraper {
 
                     String time = convertTime(dateTime);
 
-                    System.out.println(time);
-
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
 
                     LocalDateTime currentDateTime = LocalDateTime.now();
