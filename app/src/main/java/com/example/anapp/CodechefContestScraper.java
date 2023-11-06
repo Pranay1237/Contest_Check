@@ -3,8 +3,10 @@ package com.example.anapp;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -41,22 +43,39 @@ public class CodechefContestScraper {
                     String dateTime = jsonObject.getString("start_time");
                     String date = dateTime.substring(0, 10);
                     String name = jsonObject.getString("name");
-                    String duration = jsonObject.getString("duration");
+                    String d = jsonObject.getString("duration");
 
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    dateTime = dateTime.replace(" ", "T");
+                    dateTime = dateTime.replace("TUTC", "Z");
 
-                    LocalDate localDate = LocalDate.parse(date, formatter);
-                    LocalDate currentDate = LocalDate.now();
+                    String time = convertTime(dateTime);
 
-                    if(localDate.isAfter(currentDate)) {
-                        int d = Integer.parseInt(duration)/3600;
-                        dateTime = dateTime.replace(" ", "T");
-                        dateTime = dateTime.replace("TUTC", "Z");
+                    System.out.println(time);
 
-                        String time = convertTime(dateTime);
-                        int daysLeft = (int) ChronoUnit.DAYS.between(currentDate, localDate);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
 
-                        a.add(new ContestClass(name, time.substring(0, time.length() - 3), daysLeft, Integer.toString(d), R.drawable.codechef));
+                    LocalDateTime currentDateTime = LocalDateTime.now();
+                    LocalDateTime givenDateTime = LocalDateTime.parse(time, formatter);
+
+                    Duration duration = Duration.between(currentDateTime, givenDateTime);
+
+                    int left = (int)duration.toDays();
+
+                    if(left >= 0) {
+
+                        String hrs = Integer.toString(Integer.parseInt(d)/3600);
+                        String min = Integer.toString(Integer.parseInt(d)%60);
+
+                        if(hrs.length() == 1) {
+                            hrs = "0" + hrs;
+                        }
+                        if(min.length() == 1) {
+                            min = "0" + min;
+                        }
+
+                        String dur = hrs + ":" + min;
+
+                        a.add(new ContestClass(name, time, left, dur, R.drawable.codechef));
                     }
                 }
             } else {
@@ -75,7 +94,7 @@ public class CodechefContestScraper {
         ZoneId istZone = ZoneId.of("Asia/Kolkata");
         ZonedDateTime istTime = instant.atZone(istZone);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
         String istTimeString = istTime.format(formatter);
 
         return istTimeString;
