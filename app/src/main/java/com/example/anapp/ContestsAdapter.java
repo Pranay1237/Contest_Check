@@ -49,7 +49,17 @@ public class ContestsAdapter extends RecyclerView.Adapter<ContestsViewHolder> {
 
             Duration duration = Duration.between(currentDateTime, givenDateTime);
 
-            String ans = "Starts in " + (int) duration.toHours() + ":" + (int) duration.toMinutes()%60;
+            String hrs = Integer.toString((int)duration.toHours());
+            String mins = Integer.toString((int)duration.toMinutes()%60);
+
+            if(hrs.length() == 1) {
+                hrs = "0" + hrs;
+            }
+            if(mins.length() == 1) {
+                mins = "0" + mins;
+            }
+
+            String ans = "Starts in " + hrs + ":" + mins;
 
             holder.daysLeft.setText(ans);
         } else if(left == 1) {
