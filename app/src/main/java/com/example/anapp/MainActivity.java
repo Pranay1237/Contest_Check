@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
             final List<ContestClass> a = codechefContestScraper.getContests();
             final List<ContestClass> b = leetcodeContestScraper.getContests();
 
+            if(a == null || b == null || contests == null) {
+                Toast.makeText(getApplicationContext(), "Some error occurred. Try again after some time", Toast.LENGTH_SHORT).show();
+            }
+
             if(contests != null && a != null) {
                 contests.addAll(a);
             }

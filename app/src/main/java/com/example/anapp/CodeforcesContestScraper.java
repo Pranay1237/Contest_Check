@@ -22,7 +22,7 @@ public class CodeforcesContestScraper {
 
     public List<ContestClass> getContests() {
         try {
-            String url = "https://codeforces.com/contests";
+            String url = "https://codeforces.com/contests?complete=true";
             Document document = Jsoup.connect(url).get();
 
             Element contestTable = document.select("table").get(0);
