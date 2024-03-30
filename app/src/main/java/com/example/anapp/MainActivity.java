@@ -5,8 +5,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ProgressBar progressBar;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +29,18 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.my_toolbar);
         progressBar = findViewById(R.id.progressBar);
+        button = findViewById(R.id.loginButton);
         setSupportActionBar(toolbar);
 
         progressBar.setVisibility(View.VISIBLE);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), cfLogin.class);
+                startActivity(intent);
+            }
+        });
 
         new thread1().start();
     }
