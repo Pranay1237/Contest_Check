@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ProgressBar progressBar;
+
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,15 @@ public class MainActivity extends AppCompatActivity {
         new thread1().start();
     }
 
+    private void showToastOnUIThread(String message) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     class thread1 extends Thread {
         public void run() {
             super.run();
@@ -46,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             final List<ContestClass> b = leetcodeContestScraper.getContests();
 
             if(a == null || b == null || contests == null) {
-                Toast.makeText(getApplicationContext(), "Some error occurred. Try again after some time", Toast.LENGTH_SHORT).show();
+                showToastOnUIThread("Some error occurred. Try again after some time");
             }
 
             if(contests != null && a != null) {
@@ -62,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     if (contests == null) {
-                        Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_SHORT).show();
+                        showToastOnUIThread("Some error occurred");
                         System.out.println("error");
                     }
                     else {
