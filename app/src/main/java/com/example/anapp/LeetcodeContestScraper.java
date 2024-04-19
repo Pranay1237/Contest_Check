@@ -1,5 +1,8 @@
 package com.example.anapp;
 
+import android.content.Context;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
