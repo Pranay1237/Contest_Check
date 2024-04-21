@@ -1,5 +1,7 @@
 package com.example.anapp;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,56 +20,60 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class CodeforcesContestScraper {
 
     public List<ContestClass> getContests() {
+
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://contests-backend.up.railway.app/codeforces";
+
+        Request request = new Request.Builder().url(url).build();
+
+        List<ContestClass> a = new ArrayList<>();
+
         try {
-            String url = "https://codeforces.com/contests?complete=true";
-            Document document = Jsoup.connect(url).get();
+            Response response = client.newCall(request).execute();
 
-            Element contestTable = document.select("table").get(0);
-            Elements rows = contestTable.select("tr");
+            if(response.isSuccessful()) {
+                String responseBody = response.body().string();
 
-            List<ContestClass> ans = new ArrayList<>();
+                JSONArray jsonArray = new JSONArray(responseBody);
 
-            for (int i = 1; i < rows.size(); i++) {
-                Element row = rows.get(i);
-                Elements col = row.select("td");
+                for(int i = 0; i<jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                String contestName = col.get(0).text();
-                String startTime = col.get(2).text();
-                String duration = col.get(3).text();
+                    String name = jsonObject.getString("name");
+                    String start = jsonObject.getString("start");
+                    String duration = jsonObject.getString("duration");
+                    String left = jsonObject.getString("startsIn");
+                    String link = jsonObject.getString("register");
 
-                String convertedTime = convertTime(startTime);
-
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
-                DateTimeFormatter f = DateTimeFormatter.ofPattern("E");
-
-                LocalDateTime currentDateTime = LocalDateTime.now();
-                LocalDateTime givenDateTime = LocalDateTime.parse(convertedTime, formatter);
-                Duration duration1 = Duration.between(currentDateTime, givenDateTime);
-
-                String day = givenDateTime.format(f);
-
-                ans.add(new ContestClass(contestName, convertedTime, day, (int)duration1.toDays(), duration, R.drawable.codeforces));
+                    a.add(new ContestClass(name, start, link, 0, duration, R.drawable.codeforces));
+                }
+                return a;
+            } else {
+                System.out.println("Response was not Successful. Response code : " + response.code());
             }
-            return ans;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public String convertTime(String time) {
-
-        DateTimeFormatter moscowFormatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm", Locale.ENGLISH);
-        ZonedDateTime moscowDateTime = ZonedDateTime.parse(time, moscowFormatter.withZone(ZoneId.of("Europe/Moscow")));
-
-        ZonedDateTime istDateTime = moscowDateTime.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
-
-        DateTimeFormatter istFormatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm", Locale.ENGLISH);
-        String istDateTimeStr = istDateTime.format(istFormatter);
-
-        return istDateTimeStr;
-    }
+//    public String convertTime(String time) {
+//
+//        DateTimeFormatter moscowFormatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm", Locale.ENGLISH);
+//        ZonedDateTime moscowDateTime = ZonedDateTime.parse(time, moscowFormatter.withZone(ZoneId.of("Europe/Moscow")));
+//
+//        ZonedDateTime istDateTime = moscowDateTime.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
+//
+//        DateTimeFormatter istFormatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm", Locale.ENGLISH);
+//        String istDateTimeStr = istDateTime.format(istFormatter);
+//
+//        return istDateTimeStr;
+//    }
 }
