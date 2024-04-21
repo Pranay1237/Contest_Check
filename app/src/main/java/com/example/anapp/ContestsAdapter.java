@@ -37,36 +37,37 @@ public class ContestsAdapter extends RecyclerView.Adapter<ContestsViewHolder> {
         holder.dateTime.setText(items.get(position).getStartTime() + " " + items.get(position).getDay());
         holder.duration.setText(items.get(position).getDuration() + " hrs");
         holder.imageView.setImageResource(items.get(position).getImage());
+        holder.daysLeft.setText("0");
 
-        int left = items.get(position).getDaysLeft();
-        if(left == 0) {
-            String dateTime = items.get(position).getStartTime();
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
-
-            LocalDateTime currentDateTime = LocalDateTime.now();
-            LocalDateTime givenDateTime = LocalDateTime.parse(dateTime, formatter);
-
-            Duration duration = Duration.between(currentDateTime, givenDateTime);
-
-            String hrs = Integer.toString((int)duration.toHours());
-            String mins = Integer.toString((int)duration.toMinutes()%60);
-
-            if(hrs.length() == 1) {
-                hrs = "0" + hrs;
-            }
-            if(mins.length() == 1) {
-                mins = "0" + mins;
-            }
-
-            String ans = "Starts in " + hrs + ":" + mins;
-
-            holder.daysLeft.setText(ans);
-        } else if(left == 1) {
-            holder.daysLeft.setText("Tomorrow");
-        } else {
-            holder.daysLeft.setText("In " + left + " days");
-        }
+//        int left = items.get(position).getDaysLeft();
+//        if(left == 0) {
+//            String dateTime = items.get(position).getStartTime();
+//
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
+//
+//            LocalDateTime currentDateTime = LocalDateTime.now();
+//            LocalDateTime givenDateTime = LocalDateTime.parse(dateTime, formatter);
+//
+//            Duration duration = Duration.between(currentDateTime, givenDateTime);
+//
+//            String hrs = Integer.toString((int)duration.toHours());
+//            String mins = Integer.toString((int)duration.toMinutes()%60);
+//
+//            if(hrs.length() == 1) {
+//                hrs = "0" + hrs;
+//            }
+//            if(mins.length() == 1) {
+//                mins = "0" + mins;
+//            }
+//
+//            String ans = "Starts in " + hrs + ":" + mins;
+//
+//            holder.daysLeft.setText(ans);
+//        } else if(left == 1) {
+//            holder.daysLeft.setText("Tomorrow");
+//        } else {
+//            holder.daysLeft.setText("In " + left + " days");
+//        }
     }
 
     @Override

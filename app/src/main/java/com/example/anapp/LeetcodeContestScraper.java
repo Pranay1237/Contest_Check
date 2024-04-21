@@ -35,46 +35,34 @@ public class LeetcodeContestScraper {
 
     public List<ContestClass> getContests() {
 
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://contests-backend.up.railway.app/leetcode";
+
+        Request request = new Request.Builder().url(url).build();
+
         List<ContestClass> a = new ArrayList<>();
 
         try {
-            String url = "https://leetcode.com/contest/";
-            Document document = Jsoup.connect(url).get();
+            Response response = client.newCall(request).execute();
 
-            Element Weekly = document.getElementsByClass("truncate").get(0);
-            Element Biweekly = document.getElementsByClass("truncate").get(1);
+            if(response.isSuccessful()) {
+                String responseBody = response.body().string();
 
-            String weeklyContestName = Weekly.text();
-            String biWeeklyContestName = Biweekly.text();
+                JSONArray jsonArray = new JSONArray(responseBody);
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
+                for(int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-            LocalDateTime currentDateTime = LocalDateTime.now();
-            LocalDateTime sundayDateTime = currentDateTime.with(TemporalAdjusters.next(DayOfWeek.SUNDAY)).withHour(8).withMinute(30).withSecond(0).withNano(0);
+                    String name = jsonObject.getString("title");
+                    String start = jsonObject.getString("startTime");
+                    String duration = jsonObject.getString("duration");
 
-            String weeklyContestDate = sundayDateTime.format(formatter);
-
-            Duration duration = Duration.between(currentDateTime, sundayDateTime);
-
-            int left = (int)duration.toDays();
-            String dur = "01:30";
-
-            a.add(new ContestClass(weeklyContestName, weeklyContestDate, "Sun", left, dur, R.drawable.leetcode));
-
-            String contestNum = weeklyContestName.substring(15, 18);
-            if(Integer.parseInt(contestNum)%2 == 1) {
-                LocalDateTime saturdayDateTime = currentDateTime.with(TemporalAdjusters.next(DayOfWeek.SATURDAY)).withHour(20).withMinute(30).withSecond(0).withNano(0);
-
-                String biweeklyContestDate = saturdayDateTime.format(formatter);
-
-                duration = Duration.between(currentDateTime, saturdayDateTime);
-
-                left = (int)duration.toDays();
-                dur = "01:30";
-
-                a.add(new ContestClass(biWeeklyContestName, biweeklyContestDate, "Sun", left, dur, R.drawable.leetcode));
+                    a.add(new ContestClass(name, start, start, 0, duration, R.drawable.leetcode));
+                }
+            } else {
+                System.out.println("Response was not Successful. Response code : " + response.code());
             }
-
+            return a;
         } catch (Exception e) {
             e.printStackTrace();
         }
