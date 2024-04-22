@@ -65,27 +65,27 @@ public class MainActivity extends AppCompatActivity {
             LeetcodeContestScraper leetcodeContestScraper = new LeetcodeContestScraper();
             CodechefContestScraper codechefContestScraper = new CodechefContestScraper();
 
-            final List<ContestClass> contests = codeforcesContestScraper.getContests();
-            final List<ContestClass> a = codechefContestScraper.getContests();
-            final List<ContestClass> b = leetcodeContestScraper.getContests();
+            final List<ContestClass> codeforces = codeforcesContestScraper.getContests();
+            final List<ContestClass> codechef = codechefContestScraper.getContests();
+            final List<ContestClass> leetcode = leetcodeContestScraper.getContests();
 
-            if(a == null || b == null || contests == null) {
+            if(codechef == null || leetcode == null || codeforces == null) {
                 showToastOnUIThread("Some error occurred. Try again after some time");
             }
 
-            if(contests != null && a != null) {
-                contests.addAll(a);
+            if(codeforces != null && codechef != null) {
+                codeforces.addAll(codechef);
             }
 
-            if(contests != null && b != null) {
-                contests.addAll(b);
+            if(codeforces != null && leetcode != null) {
+                codeforces.addAll(leetcode);
             }
 
             // Update the UI on the main thread using runOnUiThread
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (contests == null) {
+                    if (codeforces == null) {
                         showToastOnUIThread("Some error occurred");
                         System.out.println("error");
                     }
@@ -95,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
                         Comparator<ContestClass> daysCompare = Comparator.comparingInt(ContestClass::getDaysLeft);
-                        contests.sort(daysCompare);
+                        codeforces.sort(daysCompare);
 
-                        recyclerView.setAdapter(new ContestsAdapter(getApplicationContext(), contests));
+                        recyclerView.setAdapter(new ContestsAdapter(getApplicationContext(), codeforces));
                     }
                     progressBar.setVisibility(View.INVISIBLE);
                 }

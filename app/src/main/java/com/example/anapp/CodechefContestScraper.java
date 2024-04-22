@@ -40,8 +40,6 @@ public class CodechefContestScraper {
             if(response.isSuccessful()) {
                 String responseBody = response.body().string();
 
-//                System.out.println(responseBody);
-
                 JSONArray jsonArray = new JSONArray(responseBody);
 
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -49,8 +47,9 @@ public class CodechefContestScraper {
 
                     String code = jsonObject.getString("contest_code");
                     String name = jsonObject.getString("contest_name");
-                    String start = jsonObject.getString("contest_start_date");
+                    String start = jsonObject.getString("contest_start_date_iso");
                     String duration = jsonObject.getString("contest_duration");
+                    start = convertTime(start);
                     String link = "https://www.codechef.com/"+code;
 
                     a.add(new ContestClass(name, start, link, 0, duration, R.drawable.codechef));
@@ -65,15 +64,15 @@ public class CodechefContestScraper {
         return a;
     }
 
-//    public String convertTime(String time) {
-//        Instant instant = Instant.parse(time);
-//
-//        ZoneId istZone = ZoneId.of("Asia/Kolkata");
-//        ZonedDateTime istTime = instant.atZone(istZone);
-//
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
-//        String istTimeString = istTime.format(formatter);
-//
-//        return istTimeString;
-//    }
+    public String convertTime(String time) {
+        DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(time, isoFormatter);
+
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd MMM hh:mm a");
+
+        String normalTime = zonedDateTime.format(outputFormatter);
+
+        return normalTime;
+    }
 }
