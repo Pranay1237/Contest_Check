@@ -32,8 +32,6 @@ public class CodechefContestScraper {
 
         List<ContestClass> a = new ArrayList<>();
 
-        System.out.println("yes");
-
         try {
             Response response = client.newCall(request).execute();
 
@@ -52,7 +50,7 @@ public class CodechefContestScraper {
                     String res[] = convertTime(start);
                     String link = "https://www.codechef.com/"+code;
 
-                    a.add(new ContestClass(name, res[0], Integer.parseInt(res[1]), duration, R.drawable.codechef));
+                    a.add(new ContestClass(name, res[0], Integer.parseInt(res[1]), convertMinutes(duration), R.drawable.codechef));
                 }
             } else {
                 System.out.println("Response was not Successful. Response code : " + response.code());
@@ -78,5 +76,14 @@ public class CodechefContestScraper {
         long daysLeft = ZonedDateTime.now().until(zonedDateTime, ChronoUnit.DAYS);
 
         return new String[]{day + ", " + normalTime, String.valueOf(daysLeft)};
+    }
+
+    public String convertMinutes(String min) {
+        int mins = Integer.parseInt(min);
+
+        int hours = mins / 60;
+        int minutes = mins % 60;
+
+        return String.format("%02d:%02d", hours, minutes);
     }
 }

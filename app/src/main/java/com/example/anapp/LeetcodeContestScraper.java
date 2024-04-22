@@ -56,8 +56,9 @@ public class LeetcodeContestScraper {
                     String name = jsonObject.getString("title");
                     String start = jsonObject.getString("startTime");
                     String duration = jsonObject.getString("duration");
+                    String[] res = convertTime(start);
 
-                    a.add(new ContestClass(name, start, 0, duration, R.drawable.leetcode));
+                    a.add(new ContestClass(name, res[0], Integer.parseInt(res[1]), convertSeconds(duration), R.drawable.leetcode));
                 }
             } else {
                 System.out.println("Response was not Successful. Response code : " + response.code());
@@ -67,5 +68,34 @@ public class LeetcodeContestScraper {
             e.printStackTrace();
         }
         return a;
+    }
+
+    public String[] convertTime(String time) {
+
+        long timestamp = Long.parseLong(time);
+
+        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.systemDefault());
+
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd MMM hh:mm a");
+
+        DayOfWeek dayOfWeek = dateTime.getDayOfWeek();
+
+        String day = dayOfWeek.toString().substring(0, 3);
+
+        String outputDate = dateTime.format(outputFormatter);
+
+        LocalDateTime currentDate = LocalDateTime.now();
+        Duration duration = Duration.between(currentDate, dateTime);
+        long daysLeft = duration.toDays();
+
+        return new String[]{day + ", " + outputDate, String.valueOf(daysLeft)};
+    }
+
+    public String convertSeconds(String sec) {
+        int seconds = Integer.parseInt(sec);
+        int hours = seconds / 3600;
+        int minutes = (seconds % 3600) / 60;
+
+        return String.format("%02d:%02d", hours, minutes);
     }
 }

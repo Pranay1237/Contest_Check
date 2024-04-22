@@ -29,8 +29,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="409dp"
         android:layout_height="650dp"
-        android:layout_below="@+id/upcoming_contests"
-        android:layout_marginBottom="5dp" />
+        android:layout_below="@+id/upcoming_contests" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -39,13 +38,5 @@
         android:layout_height="wrap_content"
         android:visibility="invisible"
         android:layout_centerInParent="true"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/loginButton"
-        android:text="Login to Codeforces"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/recyclerView"/>
 
 </RelativeLayout>
