@@ -57,7 +57,7 @@ public class LeetcodeContestScraper {
                     String start = jsonObject.getString("startTime");
                     String duration = jsonObject.getString("duration");
 
-                    a.add(new ContestClass(name, start, start, 0, duration, R.drawable.leetcode));
+                    a.add(new ContestClass(name, start, 0, duration, R.drawable.leetcode));
                 }
             } else {
                 System.out.println("Response was not Successful. Response code : " + response.code());

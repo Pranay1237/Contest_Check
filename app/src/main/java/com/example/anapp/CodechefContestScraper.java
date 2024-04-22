@@ -49,10 +49,10 @@ public class CodechefContestScraper {
                     String name = jsonObject.getString("contest_name");
                     String start = jsonObject.getString("contest_start_date_iso");
                     String duration = jsonObject.getString("contest_duration");
-                    start = convertTime(start);
+                    String res[] = convertTime(start);
                     String link = "https://www.codechef.com/"+code;
 
-                    a.add(new ContestClass(name, start, link, 0, duration, R.drawable.codechef));
+                    a.add(new ContestClass(name, res[0], Integer.parseInt(res[1]), duration, R.drawable.codechef));
                 }
             } else {
                 System.out.println("Response was not Successful. Response code : " + response.code());
@@ -64,15 +64,19 @@ public class CodechefContestScraper {
         return a;
     }
 
-    public String convertTime(String time) {
+    public String[] convertTime(String time) {
         DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
         ZonedDateTime zonedDateTime = ZonedDateTime.parse(time, isoFormatter);
 
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd MMM hh:mm a");
-
         String normalTime = zonedDateTime.format(outputFormatter);
 
-        return normalTime;
+        DayOfWeek dayOfWeek = zonedDateTime.getDayOfWeek();
+        String day = dayOfWeek.toString().substring(0, 3);
+
+        long daysLeft = ZonedDateTime.now().until(zonedDateTime, ChronoUnit.DAYS);
+
+        return new String[]{day + ", " + normalTime, String.valueOf(daysLeft)};
     }
 }
