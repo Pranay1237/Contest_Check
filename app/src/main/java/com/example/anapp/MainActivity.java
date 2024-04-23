@@ -14,8 +14,12 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -84,14 +88,36 @@ public class MainActivity extends AppCompatActivity {
 
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-                        Comparator<ContestClass> daysCompare = Comparator.comparingInt(ContestClass::getDaysLeft);
-                        codeforces.sort(daysCompare);
+                        List<ContestClass> contests = Sort(codeforces);
 
-                        recyclerView.setAdapter(new ContestsAdapter(getApplicationContext(), codeforces));
+                        recyclerView.setAdapter(new ContestsAdapter(getApplicationContext(), contests));
                     }
                     progressBar.setVisibility(View.INVISIBLE);
                 }
             });
         }
+    }
+
+    public List<ContestClass> Sort(List<ContestClass> Contests) {
+        Collections.sort(Contests, new Comparator<ContestClass>() {
+            @Override
+            public int compare(ContestClass o1, ContestClass o2) {
+                String s1 = o1.getStartTime().substring(5);
+                String s2 = o2.getStartTime().substring(5);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM hh:mm a");
+
+                Date d1, d2;
+
+                try {
+                    d1 = dateFormat.parse(s1);
+                    d2 = dateFormat.parse(s2);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+                return d1.compareTo(d2);
+            }
+        });
+        return Contests;
     }
 }
