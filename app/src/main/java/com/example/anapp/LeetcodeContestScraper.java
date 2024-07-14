@@ -1,30 +1,15 @@
 package com.example.anapp;
 
-import android.content.Context;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjuster;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -36,7 +21,7 @@ public class LeetcodeContestScraper {
     public List<ContestClass> getContests() {
 
         OkHttpClient client = new OkHttpClient();
-        String url = "https://contests-backend.up.railway.app/leetcode";
+        String url = URLs.LEETCODE_URL;
 
         Request request = new Request.Builder().url(url).build();
 
@@ -46,6 +31,7 @@ public class LeetcodeContestScraper {
             Response response = client.newCall(request).execute();
 
             if(response.isSuccessful()) {
+                assert response.body() != null;
                 String responseBody = response.body().string();
 
                 JSONArray jsonArray = new JSONArray(responseBody);
@@ -73,17 +59,11 @@ public class LeetcodeContestScraper {
     public String[] convertTime(String time) {
 
         long timestamp = Long.parseLong(time);
-
         LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.systemDefault());
-
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd MMM hh:mm a");
-
         DayOfWeek dayOfWeek = dateTime.getDayOfWeek();
-
         String day = dayOfWeek.toString().substring(0, 3);
-
         String outputDate = dateTime.format(outputFormatter);
-
         LocalDateTime currentDate = LocalDateTime.now();
         Duration duration = Duration.between(currentDate, dateTime);
         long daysLeft = duration.toDays();

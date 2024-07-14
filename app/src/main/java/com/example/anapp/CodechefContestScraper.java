@@ -4,19 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.time.DayOfWeek;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -26,7 +18,7 @@ public class CodechefContestScraper {
 
     public List<ContestClass> getContests() {
         OkHttpClient client = new OkHttpClient();
-        String url = "https://contests-backend.up.railway.app/codechef";
+        String url = URLs.CODECHEF_URL;
 
         Request request = new Request.Builder().url(url).build();
 
