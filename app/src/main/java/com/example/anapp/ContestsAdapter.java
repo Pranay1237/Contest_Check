@@ -7,13 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class ContestsAdapter extends RecyclerView.Adapter<ContestsViewHolder> {
 

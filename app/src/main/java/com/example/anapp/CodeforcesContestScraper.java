@@ -2,23 +2,14 @@ package com.example.anapp;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.time.DayOfWeek;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -28,8 +19,12 @@ public class CodeforcesContestScraper {
 
     public List<ContestClass> getContests() {
 
-        OkHttpClient client = new OkHttpClient();
-        String url = "https://contests-backend.onrender.com/codeforces";
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .build();
+        String url = URLs.CODEFORCES_URL;
 
         Request request = new Request.Builder().url(url).build();
 
