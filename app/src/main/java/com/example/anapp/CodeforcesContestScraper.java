@@ -19,11 +19,7 @@ public class CodeforcesContestScraper {
 
     public List<ContestClass> getContests() {
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .build();
+        OkHttpClient client = new OkHttpClient();
         String url = URLs.CODEFORCES_URL;
 
         Request request = new Request.Builder().url(url).build();
