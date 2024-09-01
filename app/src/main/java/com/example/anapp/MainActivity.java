@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBar;
     AllContestsCombine allContestsCombine;
     List<ContestClass> contests;
+    ExecutorService executorService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +38,22 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         allContestsCombine = new AllContestsCombine(MainActivity.this);
-        contests = allContestsCombine.getContests();
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setAdapter(new ContestsAdapter(getApplicationContext(), contests));
+        executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                contests = allContestsCombine.getContests();
 
-        progressBar.setVisibility(View.INVISIBLE);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        recyclerView.setAdapter(new ContestsAdapter(getApplicationContext(), contests));
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+        });
     }
 }

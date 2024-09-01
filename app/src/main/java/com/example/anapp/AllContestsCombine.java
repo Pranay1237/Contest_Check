@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +35,7 @@ public class AllContestsCombine {
         final List<ContestClass> codeforces = codeforcesContestScraper.getContests();
         final List<ContestClass> codechef = codechefContestScraper.getContests();
         final List<ContestClass> leetcode = leetcodeContestScraper.getContests();
+        contests = new ArrayList<>();
 
         contests.addAll(codeforces);
         contests.addAll(codechef);
@@ -50,21 +52,10 @@ public class AllContestsCombine {
         Contests.sort(new Comparator<ContestClass>() {
             @Override
             public int compare(ContestClass o1, ContestClass o2) {
-                String s1 = o1.getStartTime().substring(5);
-                String s2 = o2.getStartTime().substring(5);
+                int s1 = o1.getDaysLeft();
+                int s2 = o2.getDaysLeft();
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM hh:mm a");
-
-                Date d1, d2;
-
-                try {
-                    d1 = dateFormat.parse(s1);
-                    d2 = dateFormat.parse(s2);
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
-                assert d1 != null;
-                return d1.compareTo(d2);
+                return Integer.compare(s1, s2);
             }
         });
         return Contests;
