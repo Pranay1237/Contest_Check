@@ -29,7 +29,7 @@ public class CodeforcesContestScraper {
     public List<ContestClass> getContests() {
 
         OkHttpClient client = new OkHttpClient();
-        String url = "https://contests-backend.up.railway.app/codeforces";
+        String url = "https://contests-backend.onrender.com/codeforces";
 
         Request request = new Request.Builder().url(url).build();
 
@@ -48,11 +48,15 @@ public class CodeforcesContestScraper {
 
                     String name = jsonObject.getString("name");
                     String start = jsonObject.getString("start");
-                    String duration = jsonObject.getString("duration");
+                    JSONObject duration = jsonObject.getJSONObject("duration");
                     String link = jsonObject.getString("register");
-                    String[] res = convertTime(start);
+                    JSONObject startsIn = jsonObject.getJSONObject("startsIn");
+                    String durationString = duration.getString("hours") + "h " + duration.getString("minutes") + "m";
+                    int days = startsIn.getInt("days");
+                    int hours = startsIn.getInt("hours");
+                    int minutes = startsIn.getInt("minutes");
 
-                    a.add(new ContestClass(name, res[0], Integer.parseInt(res[1]), duration, R.drawable.codeforces));
+                    a.add(new ContestClass(name, start, days, durationString, R.drawable.codeforces));
                 }
                 return a;
             } else {

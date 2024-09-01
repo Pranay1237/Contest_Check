@@ -26,7 +26,7 @@ public class CodechefContestScraper {
 
     public List<ContestClass> getContests() {
         OkHttpClient client = new OkHttpClient();
-        String url = "https://contests-backend.up.railway.app/codechef";
+        String url = "https://contests-backend.onrender.com/codechef";
 
         Request request = new Request.Builder().url(url).build();
 

@@ -102,20 +102,9 @@ public class MainActivity extends AppCompatActivity {
         Collections.sort(Contests, new Comparator<ContestClass>() {
             @Override
             public int compare(ContestClass o1, ContestClass o2) {
-                String s1 = o1.getStartTime().substring(5);
-                String s2 = o2.getStartTime().substring(5);
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM hh:mm a");
-
-                Date d1, d2;
-
-                try {
-                    d1 = dateFormat.parse(s1);
-                    d2 = dateFormat.parse(s2);
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
-                return d1.compareTo(d2);
+                int s1 = o1.getDaysLeft();
+                int s2 = o2.getDaysLeft();
+                return Integer.compare(s1, s2);
             }
         });
         return Contests;

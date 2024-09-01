@@ -36,7 +36,7 @@ public class LeetcodeContestScraper {
     public List<ContestClass> getContests() {
 
         OkHttpClient client = new OkHttpClient();
-        String url = "https://contests-backend.up.railway.app/leetcode";
+        String url = "https://contests-backend.onrender.com/leetcode";
 
         Request request = new Request.Builder().url(url).build();
 
