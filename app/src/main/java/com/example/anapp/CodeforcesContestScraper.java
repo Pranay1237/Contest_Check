@@ -42,12 +42,15 @@ public class CodeforcesContestScraper {
                     JSONObject duration = jsonObject.getJSONObject("duration");
                     String link = jsonObject.getString("register");
                     JSONObject startsIn = jsonObject.getJSONObject("startsIn");
-                    String durationString = duration.getString("hours") + "h " + duration.getString("minutes") + "m";
                     int days = startsIn.getInt("days");
                     int hours = startsIn.getInt("hours");
                     int minutes = startsIn.getInt("minutes");
+                    int durationHours = duration.getInt("hours");
+                    int durationMinutes = duration.getInt("minutes");
+                    String durationString = (durationHours == 0) ? "" : (durationHours + "h ") + (durationMinutes == 0 ? "" : (durationMinutes + "m"));
+                    String resultantDays = (days == 0) ? "" : (days + "d ") + (hours == 0 ? "" : (hours + "h ")) + (minutes == 0 ? "" : (minutes + "m"));
 
-                    a.add(new ContestClass(name, start, days, durationString, R.drawable.codeforces));
+                    a.add(new ContestClass(name, start, days, resultantDays, durationString, R.drawable.codeforces));
                 }
                 return a;
             } else {
@@ -57,25 +60,5 @@ public class CodeforcesContestScraper {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public String[] convertTime(String time) {
-
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("MMM/dd/yyyy HH:mm");
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd MMM hh:mm a");
-
-        LocalDateTime dateTime = LocalDateTime.parse(time, inputFormatter);
-
-        String outputDate = dateTime.format(outputFormatter);
-
-        DayOfWeek dayOfWeek = dateTime.getDayOfWeek();
-        String day = dayOfWeek.toString().substring(0, 3);
-
-        LocalDateTime currentDate = LocalDateTime.now();
-        long daysLeft = ChronoUnit.DAYS.between(currentDate, dateTime);
-
-        String daysLeftString = String.valueOf(daysLeft);
-
-        return new String[]{day + ", " + outputDate, daysLeftString};
     }
 }
