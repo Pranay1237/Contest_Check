@@ -47,7 +47,7 @@ public class CodeforcesContestScraper {
                     int minutes = startsIn.getInt("minutes");
                     int durationHours = duration.getInt("hours");
                     int durationMinutes = duration.getInt("minutes");
-                    String durationString = (durationHours == 0) ? "" : (durationHours + "h ") + (durationMinutes == 0 ? "" : (durationMinutes + "m"));
+                    String durationString = (durationHours == 0 ? "" : (durationHours + "h ")) + (durationMinutes == 0 ? "" : (durationMinutes + "m"));
                     String resultantDays = (days == 0) ? "" : (days + "d ") + (hours == 0 ? "" : (hours + "h ")) + (minutes == 0 ? "" : (minutes + "m"));
 
                     a.add(new ContestClass(name, start, days, resultantDays, durationString, R.drawable.codeforces));
