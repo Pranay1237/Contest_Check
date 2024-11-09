@@ -1,4 +1,4 @@
-package com.example.anapp;
+package com.contest.app;
 
 import org.junit.Test;
 

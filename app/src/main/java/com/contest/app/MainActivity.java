@@ -1,4 +1,4 @@
-package com.example.anapp;
+package com.contest.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.example.anapp.R;
+import com.service.notification.ScheduleNotification;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;

@@ -1,4 +1,4 @@
-package com.example.anapp;
+package com.contest.app;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.anapp.R;
 
 public class ContestsViewHolder extends RecyclerView.ViewHolder {
 

@@ -1,4 +1,6 @@
-package com.example.anapp;
+package com.contest.app;
+
+import com.example.anapp.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.example.anapp;
+package com.service.notification;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
+
+import com.example.anapp.R;
 
 public class NotificationWorker extends Worker {
 

@@ -1,4 +1,4 @@
-package com.example.anapp;
+package com.service.notification;
 
 import android.content.Context;
 
