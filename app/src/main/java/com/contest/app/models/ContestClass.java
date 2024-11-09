@@ -1,4 +1,4 @@
-package com.contest.app;
+package com.contest.app.models;
 
 public class ContestClass {
 

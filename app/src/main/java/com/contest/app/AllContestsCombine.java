@@ -2,6 +2,11 @@ package com.contest.app;
 
 import android.content.Context;
 
+import com.contest.app.models.ContestClass;
+import com.contest.app.scraping.CodechefContestScraper;
+import com.contest.app.scraping.CodeforcesContestScraper;
+import com.contest.app.scraping.LeetcodeContestScraper;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

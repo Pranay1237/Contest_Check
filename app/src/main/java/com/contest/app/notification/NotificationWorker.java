@@ -1,4 +1,4 @@
-package com.service.notification;
+package com.contest.app.notification;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

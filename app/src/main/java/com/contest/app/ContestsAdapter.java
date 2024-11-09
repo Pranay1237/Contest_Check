@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.contest.app.models.ContestClass;
 import com.example.anapp.R;
 
 import java.util.List;

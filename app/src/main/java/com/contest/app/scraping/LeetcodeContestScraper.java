@@ -1,5 +1,7 @@
-package com.contest.app;
+package com.contest.app.scraping;
 
+import com.contest.app.models.ContestClass;
+import com.contest.app.URLs;
 import com.example.anapp.R;
 
 import org.json.JSONArray;
@@ -12,11 +14,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class CodechefContestScraper {
+public class LeetcodeContestScraper {
 
     public List<ContestClass> getContests() {
+
         OkHttpClient client = new OkHttpClient();
-        String url = URLs.CODECHEF_URL;
+        String url = URLs.LEETCODE_URL;
 
         Request request = new Request.Builder().url(url).build();
 
@@ -44,9 +47,9 @@ public class CodechefContestScraper {
                     int durationHours = duration.getInt("hours");
                     int durationMinutes = duration.getInt("minutes");
                     String durationString = (durationHours == 0 ? "" : (durationHours + "h ")) + (durationMinutes == 0 ? "" : (durationMinutes + "m"));
-                    String resultantDays = (days == 0) ? "" : (days + "d ") + (hours == 0 ? "" : (hours + "h ")) + (minutes == 0 ? "" : (minutes + "m"));
+                    String resultantDays = (days == 0 ? "" : (days + "d ")) + (hours == 0 ? "" : (hours + "h ")) + (minutes == 0 ? "" : (minutes + "m"));
 
-                    a.add(new ContestClass(name, start, days, resultantDays, durationString, R.drawable.codechef));
+                    a.add(new ContestClass(name, start, days, resultantDays, durationString, R.drawable.leetcode));
                 }
             } else {
                 System.out.println("Response was not Successful. Response code : " + response.code());

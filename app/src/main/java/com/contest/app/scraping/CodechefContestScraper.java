@@ -1,5 +1,7 @@
-package com.contest.app;
+package com.contest.app.scraping;
 
+import com.contest.app.models.ContestClass;
+import com.contest.app.URLs;
 import com.example.anapp.R;
 
 import org.json.JSONArray;
@@ -12,12 +14,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class CodeforcesContestScraper {
+public class CodechefContestScraper {
 
     public List<ContestClass> getContests() {
-
         OkHttpClient client = new OkHttpClient();
-        String url = URLs.CODEFORCES_URL;
+        String url = URLs.CODECHEF_URL;
 
         Request request = new Request.Builder().url(url).build();
 
@@ -31,7 +32,7 @@ public class CodeforcesContestScraper {
 
                 JSONArray jsonArray = new JSONArray(responseBody);
 
-                for(int i = 0; i<jsonArray.length(); i++) {
+                for(int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                     String name = jsonObject.getString("name");
@@ -45,17 +46,17 @@ public class CodeforcesContestScraper {
                     int durationHours = duration.getInt("hours");
                     int durationMinutes = duration.getInt("minutes");
                     String durationString = (durationHours == 0 ? "" : (durationHours + "h ")) + (durationMinutes == 0 ? "" : (durationMinutes + "m"));
-                    String resultantDays = (days == 0 ? "" : (days + "d ")) + (hours == 0 ? "" : (hours + "h ")) + (minutes == 0 ? "" : (minutes + "m"));
+                    String resultantDays = (days == 0) ? "" : (days + "d ") + (hours == 0 ? "" : (hours + "h ")) + (minutes == 0 ? "" : (minutes + "m"));
 
-                    a.add(new ContestClass(name, start, days, resultantDays, durationString, R.drawable.codeforces));
+                    a.add(new ContestClass(name, start, days, resultantDays, durationString, R.drawable.codechef));
                 }
-                return a;
             } else {
                 System.out.println("Response was not Successful. Response code : " + response.code());
             }
+            return a;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return a;
     }
 }

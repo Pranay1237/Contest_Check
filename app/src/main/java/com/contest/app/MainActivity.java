@@ -16,8 +16,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.contest.app.models.ContestClass;
 import com.example.anapp.R;
-import com.service.notification.ScheduleNotification;
+import com.contest.app.notification.ScheduleNotification;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
