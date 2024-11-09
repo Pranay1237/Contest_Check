@@ -3,10 +3,6 @@ package com.example.anapp;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.time.DayOfWeek;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
