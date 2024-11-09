@@ -28,13 +28,11 @@ public class ContestsAdapter extends RecyclerView.Adapter<ContestsViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ContestsViewHolder holder, int position) {
 
-        String startsIn = "Starts In " + items.get(position).getDaysLeft() + " days";
-
         holder.contestName.setText(items.get(position).getContestName());
         holder.dateTime.setText(items.get(position).getStartTime());
-        holder.duration.setText(items.get(position).getDuration() + " hrs");
+        holder.duration.setText(items.get(position).getDuration());
         holder.imageView.setImageResource(items.get(position).getImage());
-        holder.daysLeft.setText(startsIn);
+        holder.daysLeft.setText(items.get(position).getTimeLeft() + " Left");
     }
 
     @Override
