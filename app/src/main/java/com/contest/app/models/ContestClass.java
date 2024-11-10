@@ -1,11 +1,22 @@
 package com.contest.app.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "Contests")
 public class ContestClass {
 
-    String contestName, startTime, duration, timeLeft;
-    int image, daysLeft;
+    @PrimaryKey
+    @NonNull
+    private String contestName;
+    private String startTime;
+    private String duration;
+    private String timeLeft;
+    private int image;
+    private int daysLeft;
 
-    public ContestClass(String contestName, String startTime, int daysLeft, String timeLeft, String duration, int image) {
+    public ContestClass(@NonNull String contestName, String startTime, int daysLeft, String timeLeft, String duration, int image) {
         this.contestName = contestName;
         this.startTime = startTime;
         this.daysLeft = daysLeft;
@@ -14,6 +25,7 @@ public class ContestClass {
         this.image = image;
     }
 
+    @NonNull
     public String getContestName() {
         return contestName;
     }
@@ -36,5 +48,29 @@ public class ContestClass {
 
     public String getTimeLeft() {
         return timeLeft;
+    }
+
+    public void setContestName(@NonNull String contestName) {
+        this.contestName = contestName;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public void setTimeLeft(String timeLeft) {
+        this.timeLeft = timeLeft;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public void setDaysLeft(int daysLeft) {
+        this.daysLeft = daysLeft;
     }
 }
