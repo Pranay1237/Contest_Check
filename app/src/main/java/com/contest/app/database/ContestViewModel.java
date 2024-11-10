@@ -1,11 +1,9 @@
 package com.contest.app.database;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.contest.app.models.ContestClass;
 

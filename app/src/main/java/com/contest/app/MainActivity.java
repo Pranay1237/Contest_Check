@@ -21,10 +21,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.contest.app.database.AppDatabase;
 import com.contest.app.database.ContestViewModel;
 import com.contest.app.database.ContestViewModelFactory;
-import com.contest.app.database.dao.ContestDao;
 import com.contest.app.models.ContestClass;
 import com.contest.app.worker.DataFetchWorker;
 import com.contest.app.worker.ScheduleWorker;
@@ -32,16 +30,11 @@ import com.example.anapp.R;
 import com.contest.app.notification.ScheduleNotification;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ProgressBar progressBar;
-    AllContestsCombine allContestsCombine;
-//    List<ContestClass> contests;
-    ExecutorService executorService;
     SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
 
