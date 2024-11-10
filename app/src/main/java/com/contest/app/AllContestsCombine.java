@@ -1,7 +1,6 @@
 package com.contest.app;
 
-import android.content.Context;
-
+import com.contest.app.exception.FetchFailedException;
 import com.contest.app.models.ContestClass;
 import com.contest.app.scraping.CodechefContestScraper;
 import com.contest.app.scraping.CodeforcesContestScraper;
@@ -13,22 +12,13 @@ import java.util.List;
 
 public class AllContestsCombine {
 
-    Context context = null;
-    ToastOnUI toastOnUI;
     List<ContestClass> contests;
 
     CodeforcesContestScraper codeforcesContestScraper;
     LeetcodeContestScraper leetcodeContestScraper;
     CodechefContestScraper codechefContestScraper;
 
-    //Passing the Context as a parameter because to show a Toast notification we need the context
-    public AllContestsCombine(Context context) {
-        this.context = context;
-    }
-
-    public List<ContestClass> getContests() {
-
-        toastOnUI = new ToastOnUI();
+    public List<ContestClass> getContests() throws FetchFailedException {
 
         codeforcesContestScraper = new CodeforcesContestScraper();
         leetcodeContestScraper = new LeetcodeContestScraper();
@@ -44,21 +34,17 @@ public class AllContestsCombine {
         contests.addAll(leetcode);
 
         if (codechef == null || leetcode == null || codeforces == null) {
-            toastOnUI.showToastOnUIThread(context, "Some error occurred. Try again after some time");
+            throw new FetchFailedException("Try after some time", new Throwable("Failed to fetch contests"));
         }
         contests = Sort(contests);
         return contests;
     }
 
     public List<ContestClass> Sort(List<ContestClass> Contests) {
-        Contests.sort(new Comparator<ContestClass>() {
-            @Override
-            public int compare(ContestClass o1, ContestClass o2) {
-                int s1 = o1.getDaysLeft();
-                int s2 = o2.getDaysLeft();
-
-                return Integer.compare(s1, s2);
-            }
+        Contests.sort((contest1, contest2) -> {
+            int s1 = contest1.getDaysLeft();
+            int s2 = contest2.getDaysLeft();
+            return Integer.compare(s1, s2);
         });
         return Contests;
     }
